@@ -18,8 +18,11 @@ public class FuelStatisticsService {
         List<FuelEntry> entries = car.getFuelEntries();
 
         // Not enough data to calculate consumption
+        // Business rule: need at least 2 entries
         if (entries.size() < 2) {
-            return new FuelStatsResponse(0, 0, 0);
+            throw new IllegalStateException(
+                    "At least two fuel entries are required to calculate statistics"
+            );
         }
 
         double totalFuel = 0;
